@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <script type="text/javascript" src="js/main.js" defer></script>
-    <script type="module" src="js/elements.js"></script>
+    <script type="module" src="js/elements.js" ></script>
     <!-- LitElement -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/lit-element/lit-element.js"></script>
     <!-- lit-html -->
@@ -14,6 +14,84 @@
     <title>Document</title>
 </head>
 <body>
+    <!--  
+        id:1,
+            email:'John@gmail.com',
+            username:'johnd',
+            password:'m38rmF$',
+            name:{
+                firstname:'John',
+                lastname:'Doe'
+            },
+             address:{
+                city:'...',
+                street:'...',
+                number:...,
+                zipcode:'...',
+                geolocation:{
+                    lat:'...',
+                    long:'...'
+                }
+            },
+            phone:'...'
+    -->
+    <button id="logout">Logout</button>
+    <div id="forms">
+        <form action="#" id="login">
+            <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            </div>
+            <div>
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password">
+            </div>
+            <input type="submit" value="Enviar">
+        </form>
+        <form action="" id="register">
+            <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            </div>
+            <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+            </div>
+            <div>
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password">
+            </div>
+            <div>
+            <label for="firstname">firstname</label>
+            <input type="text" id="firstname" name="firstname">
+            </div>
+            <div>
+            <label for="lastname">lastname</label>
+            <input type="text" id="lastname" name="lastname">
+            </div>
+            <div>
+            <label for="city">City</label>
+            <input type="text" id="city" name="city">
+            </div>
+            <div>
+            <label for="street">Street</label>
+            <input type="text" id="street" name="street">
+            </div>
+            <div>
+            <label for="number">Number</label>
+            <input type="text" id="number" name="number">
+            </div>
+            <div>
+            <label for="zipcode">Zipcode</label>
+            <input type="text" id="zipcode" name="zipcode">
+            </div>
+            <div>
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone">
+            </div>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
     <header>Cabecera</header>
     <div class="container"></div>
     <footer>Pie</footer>

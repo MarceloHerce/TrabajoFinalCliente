@@ -1,3 +1,4 @@
+const updateForm = document.querySelector("#updateForm");
 
 const createCard = (json)=>{
     const container = document.querySelector(".container");
@@ -12,26 +13,41 @@ const createCard = (json)=>{
         const btnAddCart = document.createElement("button");
         const img = document.createElement("img");
 
+
         p.innerHTML = json.id;
         p2.innerHTML = json.price;
         // p3.innerHTML = element.description;
         btn.innerHTML = json.category;
         btnEdit.innerHTML = "Edit";
         btnAddCart.innerHTML = "Add cart";
+        btnEdit.id = "edit-modal";
         img.src = json.image;
         div.appendChild(p);
         div.appendChild(p2);
         div.appendChild(img);
         // div.appendChild(p3);
         btn.setAttribute("href",`product\\product.html?id=${json.id}`);
-        div.appendChild(btn);
 
+
+        const modal = document.querySelector("#modal");
+        btnEdit.addEventListener('click', () => {
+            modal.showModal();
+        })
+        const closeModal = document.querySelector("#closeModal");
+        closeModal.addEventListener('click', () =>{
+            modal.close();
+        })
+
+        div.appendChild(btn);
         divBtn.appendChild(btnEdit);
         divBtn.appendChild(btnAddCart);
         
         div.classList.toggle("pCard");
         container.appendChild(div);
         container.appendChild(divBtn);
+        container.appendChild(modal);
+
+        createEditForm(json);
 };
 
 function getIdFromUrl() {
@@ -78,24 +94,92 @@ function logPromiseResults(promise) {
 
 
 
-// Modal
-const edit = document.querySelector("#edit");
-edit.addEventListener("click", function () {
-    const openModalBtn = document.getElementById("openModalBtn");
-    const modal = document.getElementById("myModal");
-    const closeModal = document.querySelector(".close");
+// UPDATE PRODUCT
+async function updateProduct(product){
+    fetch('https://fakestoreapi.com/products/7',{
+        method:"PATCH",
+        body:JSON.stringify(
+            product
+        )
+    })
+        .then(res=>res.json())
+        .then(json=>{
+            console.log(json);
+            setUpdate(product)
+        })
+}
 
-    openModalBtn.addEventListener("click", function () {
-        modal.style.display = "block";
-    });
+// UPDATE PRODUCT
 
-    closeModal.addEventListener("click", function () {
-        modal.style.display = "none";
-    });
+// SEARCH PRODUCTS IN LOCAL STORAGE
+async function setUpdate(id,product){
+    const products = JSON.parse(localStorage.setItem());
+    products.push(product);
+}
+// SEARCH PRODUCTS IN LOCAL STORAGE
 
-    window.addEventListener("click", function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
+// CREATE MODAL FORM 
+async function createEditForm(productPromise){
+    const updateForm = document.querySelector("#updateForm");
+    try{
+        const product = await productPromise;
+        for (const key in product) {
+            if (product.hasOwnProperty(key) && key != "rating") {
+                const div = document.createElement("div");
+                const label = document.createElement("label");
+                const input = document.createElement("input");
+
+                label.innerHTML = `${key.toUpperCase()}`;
+                label.setAttribute("for",key);
+                let type = "text";
+                if(key === "price"){
+                    type = "number";
+                }
+                input.setAttribute(type,key );
+                input.setAttribute("id",key );
+                input.setAttribute("name",key);
+                input.value = product[key];
+
+                console.log(`${key}: ${product[key]}`);
+                div.appendChild(label);
+                div.appendChild(input);
+
+                updateForm.appendChild(div)
+                console.log(div);
+            }
         }
-    });
+        const btn = document.createElement("input");
+        btn.type = "submit";
+        btn.value = "Submit";
+        updateForm.appendChild(btn);
+    } catch (error) {
+    console.error('Error al obtener el producto:', error);
+    }   
+}
+// CREATE MODAL FORM 
+
+// MODAL FORM SUBMIT BUTTON
+updateForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Evitar que se envíe por defecto
+    const title = document.getElementById('title');
+    const price = document.getElementById('price');
+    const description = document.getElementById('description');
+    const image = document.getElementById('image');
+    const category = document.getElementById('category');
+    // Crear 
+    const product ={
+        id: 0,
+        title: title,
+        price: price,
+        description: description,
+        image: image,
+        category: category
+        };
+        
+    console.log(product);
+
+    // Enviar mod a la API
+    updateProduct(product);
 });
+// MODAL FORM SUBMIT BUTTON
+

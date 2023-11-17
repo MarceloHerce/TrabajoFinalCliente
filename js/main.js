@@ -14,6 +14,7 @@ if(sessionStorage.getItem("login") !== null){
 
 logout.addEventListener('click', () => {
     sessionStorage.removeItem("login");
+    localStorage.setItem("products",JSON.stringify({}))
     location.reload();
 })
 

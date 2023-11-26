@@ -8,3 +8,16 @@ dialog{
     display: flex;
     flex-direction: column;
 }
+dialog form{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+#delete{
+    width: 100%;
+}
+#closeModal{
+    margin-left: 70%;
+}

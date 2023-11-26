@@ -14,28 +14,41 @@
     <title>Document</title>
 </head>
 <body>
-    <!--  
-        id:1,
-            email:'John@gmail.com',
-            username:'johnd',
-            password:'m38rmF$',
-            name:{
-                firstname:'John',
-                lastname:'Doe'
-            },
-             address:{
-                city:'...',
-                street:'...',
-                number:...,
-                zipcode:'...',
-                geolocation:{
-                    lat:'...',
-                    long:'...'
-                }
-            },
-            phone:'...'
-    -->
-    <button id="logout">Logout</button>
+    <!-- CABECERA -->
+    <header id="header">
+        <h1>Name</h1>
+        <div id="userF">
+            <button><h3 id="userName"></h3></button>
+            <button id="cart"><h3>Cart</h3></button>
+            <button id="logout"><h3>Logout</h3></button>
+        </div>
+    </header>
+    <!-- CABECERA -->
+    
+    <!-- CARRITO -->
+    <dialog id="cartModal">
+        <div id="cartContainer">
+            <div id="cartExit">
+                <img src="src/Vector.svg" alt="Exit cart">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="cartBody">
+    
+                </tbody>
+            </table>
+            <button id="buy"><h3>Buy</h3></button>
+        </div>
+    </dialog>
+    <!-- CARRITO -->
+
     <div id="forms">
         <form action="#" id="login">
             <div>
@@ -51,7 +64,7 @@
         <form action="" id="register">
             <div>
             <label for="username">Username</label>
-            <input type="text" id="username" name="username">
+            <input type="text" id="Rusername" name="username">
             </div>
             <div>
             <label for="email">Email</label>
@@ -59,7 +72,7 @@
             </div>
             <div>
             <label for="password">Password</label>
-            <input type="text" id="password" name="password">
+            <input type="password" id="Rpassword" name="password">
             </div>
             <div>
             <label for="firstname">firstname</label>
@@ -92,9 +105,42 @@
             <input type="submit" value="Enviar">
         </form>
     </div>
-    <header>Cabecera</header>
+    
+    <div id="categories">
+    </div>
     <div class="container"></div>
-    <footer>Pie</footer>
+    <button id="createProduct">Create Product</button>
+    <div id="createProductForm" class="displayN">
+        <form id="createProductSubmit">
+            <div>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price">
+            </div>
+            <div>
+                <label for="category">Username</label>
+                <select name="category" id="category">
+                <option value="electronics">Electronics</option>
+                <option value="jewelery">Jewelery</option>
+                <option value="men's clothing">Men's clothing</option>
+                <option value="women's clothing">Women's clothing</option>
+                </select>
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description">
+            </div>
+            <div>
+                <label for="image">Image</label>
+                <input type="text" id="image" name="image">
+            </div>
+            <input type="submit" value="Enviar" >
+        </form>
+    </div>
+    <footer id="footer">Pie</footer>
     <my-element></my-element>
 </body>
 </html>

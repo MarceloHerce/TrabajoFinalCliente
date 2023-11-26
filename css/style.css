@@ -6,21 +6,48 @@ img{
     max-width: 100%;
     display: block;
 }
+header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-bottom: 1rem;
+}
+footer{
+}
+#userF{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    display: none;
+}
 #register{
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-btn{
+button{
     background-color: greenyellow;
-    padding: 0.65rem;
+    padding-top: 0;
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+    height: 2rem;
 }
-
+button *{
+    padding: 0;
+    margin: 0;
+}
+button:hover {
+    cursor: pointer;
+}
 .container{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 1rem;
     gap: 5vw;
+    padding-top: 1rem;
 }
 .pCard{
     display: flex;
@@ -28,12 +55,20 @@ btn{
     justify-content: center;
     align-items: center;
     max-width: 15%;
+    min-width: 15rem;
+    padding: 1rem;
+    border-radius: 5px;
+    border: solid black;
 }
 .pCard img{
     width: 90%;
     height: auto;
     display: block;
 
+}
+.pCard p{
+    margin: 0.35rem;
+    text-align: center;
 }
 .productPage{
     flex-direction: column;
@@ -43,4 +78,82 @@ btn{
 }
 #logout{
     display: none;
+}
+#categories{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+#cartModal{
+    min-width: 90%;
+    
+}
+#cartContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+dialog table{
+    width: 100%;
+}
+#cartExit{
+    max-width: 1.5rem;
+    align-self: flex-end;
+}
+#cartBody tr{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+#cartBody td{
+    width: 25%;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+.cartDel{
+    width: 1rem;
+}
+.cartImg{
+    width: 25%;
+}
+.cartProduct{
+    
+}
+#createProduct{
+    display: block;
+    margin: auto;
+}
+#createProductForm{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+#createProductForm form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+}
+#createProductForm form div{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    
+}
+.displayB{
+    display: flex;
+    justify-content: center;
+}
+.displayN{
+    display: none;
+}
+/* REPETIDO */
+dialog::backdrop{
+    background-color: rgba(0,0,0,.55);
 }

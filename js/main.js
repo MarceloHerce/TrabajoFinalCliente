@@ -364,8 +364,10 @@ function verifyProductLocalStorage(product){
         if(productoLocalS.method === "delete"){
             console.log("Product deleted")
 
+        } else {
+
+            createCard(productoLocalS);
         }
-        createCard(productoLocalS);
     }
 }
 // VERIFICAR SI PRODUCTO DE API EXISTE EN LOCAL STORAGE
@@ -478,7 +480,7 @@ async function getSpecificCategory(category){
 function getAllProductsLocalStorage(){
     const localStorageProducts = getValuesByPattern("product");
     localStorageProducts.forEach(el => {
-        if(el.method){
+        if(el.method==="delete" || el.id<21){
             console.log("El producto es de la api");
         } else{
             createCard(el);
@@ -615,6 +617,10 @@ function addCart(el){
 
 
 
+const userBtn = document.querySelector("#user");
+userBtn.addEventListener('click', () => {
+    window.location.href = `user\\user.html`;
+})
 
 // USE USER DATA PERSO
 if(sessionStorage.getItem("user")!=null){
@@ -623,6 +629,10 @@ if(sessionStorage.getItem("user")!=null){
     dataUserName.innerHTML = dataUser.username;
 }
 // USE USER DATA PERSO
+
+
+
+
 
 
 

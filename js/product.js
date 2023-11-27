@@ -68,10 +68,15 @@ function getIdFromUrl() {
 async function getProductById(id){
     const url = `https://fakestoreapi.com/products/${id}`;
     try {
-        const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
-        verifyProductLocalStorage(json);
+        if(id < 21){
+            const response = await fetch(url);
+            const json = await response.json();
+            console.log(json);
+            verifyProductLocalStorage(json);
+        } else {
+            const product = JSON.parse(localStorage.getItem("product"+id));
+            createCard(product);
+        }
     } catch (error) {
         console.error(error);
     }
@@ -82,7 +87,7 @@ async function getProductById(id){
 
 
 // Peticion a la api por id
-console.log(getProductById(getIdFromUrl()));
+console.log((getProductById(getIdFromUrl())));
 
 function getJSON(promise){
     promise.then(res=>res.json()).then(json=>console.log(json));

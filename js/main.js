@@ -79,7 +79,6 @@ const createBtn = (json)=>{
     btnAll.addEventListener('click', () => {
         resetContainer();
         getAllProducts();
-        getAllProductsLocalStorage();
     })
 
     container.appendChild(btnAll);
@@ -379,6 +378,8 @@ async function getAllProducts(){
         productsAPI.forEach(el => {
             verifyProductLocalStorage(el);
         });
+
+        getAllProductsLocalStorage();
         return productsAPI;
     } catch (error) {
         console.error('Error obteniendo productos:', error);

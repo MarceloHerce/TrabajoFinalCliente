@@ -124,20 +124,26 @@ async function updateProduct(product){
 async function deleteProduct(id){
     const url = `https://fakestoreapi.com/products/${id}`;
     try {
-        const response = await fetch(url);
-        const json = await response.json();
-
-        // Verificar si el producto a sido modificado
-        if(localStorage.getItem("product"+json.id)){
-            const productMod = localStorage.getItem("product"+json.id);
-            console.log("El producto fue modificado");
-            setDelete(productMod);
-        } else if(json === null){
-            console.log("El objeto no es de la api");
+        if(id < 21){
+            const response = await fetch(url);
+            const json = await response.json();
+    
+            // Verificar si el producto a sido modificado
+            if(localStorage.getItem("product"+json.id)){
+                const productMod = localStorage.getItem("product"+json.id);
+                console.log("El producto fue modificado");
+                setDelete(productMod);
+            } else if(json === null){
+                console.log("El objeto no es de la api");
+            } else {
+                console.log("El producto no fue modificado")
+                json["method"]="delete"
+                setDelete(json);
+            }
         } else {
-            console.log("El producto no fue modificado")
-            json["method"]="delete"
-            setDelete(json);
+            const product = JSON.parse(localStorage.getItem("product"+id));
+            product["method"]="delete";
+            setDelete(product);
         }
     } catch (error) {
         console.error(error);
@@ -162,7 +168,7 @@ function setUpdate(product){
 function setDelete(product) {
     if(product){
         console.log(product);
-        // localStorage.setItem("product"+product.id, JSON.stringify(product));
+        localStorage.setItem("product"+product.id, JSON.stringify(product));
     } else {
         console.log("Esta en local storage");
     }
@@ -225,7 +231,7 @@ updateForm.addEventListener('submit', function(event) {
     const category = document.getElementById('category');
     // Crear 
     const product ={
-        id: id.value,
+        id: parseInt(id.value),
         title: title.value,
         price: price.value,
         description: description.value,
@@ -269,3 +275,15 @@ function verifyProductLocalStorage(product){
         createCard(productoLocalS);
     }
 }
+
+const logout = document.getElementById('logout');
+logout.style.display = "block";
+
+const userF = document.getElementById('userF');
+userF.style.display = "flex";
+userF.style.flexWrap = "wrap";
+userF.style.alignItems = "center";
+
+const dataUser = JSON.parse(sessionStorage.getItem("user"));
+const dataUserName = document.querySelector("#userName");
+dataUserName.innerHTML = dataUser.username;

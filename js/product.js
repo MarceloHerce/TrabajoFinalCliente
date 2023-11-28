@@ -231,7 +231,7 @@ updateForm.addEventListener('submit', function(event) {
     const category = document.getElementById('category');
     // Crear 
     const product ={
-        id: id.value,
+        id: parseInt(id.value),
         title: title.value,
         price: price.value,
         description: description.value,

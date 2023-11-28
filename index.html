@@ -18,9 +18,14 @@
     <header id="header">
         <h1>Name</h1>
         <div id="userF">
-            <button id="user"><h3 id="userName"></h3></button>
-            <button id="cart"><h3>Cart</h3></button>
-            <button id="logout"><h3>Logout</h3></button>
+            <!-- <button id="user"><h3 id="userName"></h3></button> -->
+            <!-- <button id="cart"><h3>Cart</h3></button> -->
+            <!-- <button id="logout"><h3>Logout</h3></button> -->
+            <ul class="nav">
+                <li id="user" onclick="toggleActive(this)"><h3 id="userName"></h3></li>
+                <li id="cart" onclick="toggleActive(this)"><h3>Cart</h3></li>
+                <li id="logout" onclick="toggleActive(this)"><h3>Logout</h3></li>
+            </ul>
         </div>
     </header>
     <!-- CABECERA -->
@@ -44,67 +49,76 @@
     
                 </tbody>
             </table>
+            <div id="cartProducts"></div>
             <button id="buy"><h3>Buy</h3></button>
         </div>
     </dialog>
     <!-- CARRITO -->
 
+    <!-- LOGIN Y REGISTER FORMS -->
     <div id="forms">
-        <form action="#" id="login">
-            <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username">
-            </div>
-            <div>
-            <label for="password">Password</label>
-            <input type="text" id="password" name="password">
-            </div>
-            <input type="submit" value="Enviar">
-        </form>
-        <form action="" id="register">
-            <div>
-            <label for="username">Username</label>
-            <input type="text" id="Rusername" name="username">
-            </div>
-            <div>
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email">
-            </div>
-            <div>
-            <label for="password">Password</label>
-            <input type="password" id="Rpassword" name="password">
-            </div>
-            <div>
-            <label for="firstname">firstname</label>
-            <input type="text" id="firstname" name="firstname">
-            </div>
-            <div>
-            <label for="lastname">lastname</label>
-            <input type="text" id="lastname" name="lastname">
-            </div>
-            <div>
-            <label for="city">City</label>
-            <input type="text" id="city" name="city">
-            </div>
-            <div>
-            <label for="street">Street</label>
-            <input type="text" id="street" name="street">
-            </div>
-            <div>
-            <label for="number">Number</label>
-            <input type="text" id="number" name="number">
-            </div>
-            <div>
-            <label for="zipcode">Zipcode</label>
-            <input type="text" id="zipcode" name="zipcode">
-            </div>
-            <div>
-            <label for="phone">Phone</label>
-            <input type="text" id="phone" name="phone">
-            </div>
-            <input type="submit" value="Enviar">
-        </form>
+        <div class="loginRegister">
+            <ul class="nav">
+                <li id="displayLogin" class="active" onclick="toggleActive(this)">Sign in</li>
+                <li id="displayRegister" onclick="toggleActive(this)">Sign Up</li>
+            </ul>
+            <form action="#" id="login">
+                <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+                </div>
+                <div>
+                <label for="password">Password</label>
+                <input type="text" id="password" name="password">
+                </div>
+                <input type="submit" value="Enviar">
+            </form>
+            <form action="" id="register" class="displayN">
+                <div>
+                <label for="username">Username</label>
+                <input type="text" id="Rusername" name="username">
+                </div>
+                <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+                </div>
+                <div>
+                <label for="password">Password</label>
+                <input type="password" id="Rpassword" name="password">
+                </div>
+                <div>
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname">
+                </div>
+                <div>
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname">
+                </div>
+                <div>
+                <label for="city">City</label>
+                <input type="text" id="city" name="city">
+                </div>
+                <div>
+                <label for="street">Street</label>
+                <input type="text" id="street" name="street">
+                </div>
+                <div>
+                <label for="number">Number</label>
+                <input type="text" id="number" name="number">
+                </div>
+                <div>
+                <label for="zipcode">Zipcode</label>
+                <input type="text" id="zipcode" name="zipcode">
+                </div>
+                <div>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone">
+                </div>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
     </div>
+    <!-- LOGIN Y REGISTER FORMS -->
     
     <div id="categories">
     </div>
@@ -140,7 +154,13 @@
             <input type="submit" value="Enviar" >
         </form>
     </div>
-    <footer id="footer">Pie</footer>
+    <footer id="footer">
+        <h3>Name</h3>
+        <div id="socialMedia">
+            <p>info@gmail.com</p>
+            
+        </div>
+    </footer>
     <my-element></my-element>
 </body>
 </html>

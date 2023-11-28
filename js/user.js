@@ -48,6 +48,16 @@ async function getUserCarts(userId){
                 console.log(element);
                 cartComponent(element);
             });
+
+            const carts = getValuesByPattern("cart");
+            carts.forEach(cart => {
+                if(cart.userId === userId){
+                    console.log("cli");
+                    console.log(cart.products);
+                    cartComponent(cart);
+                }
+            })
+
         } else {
             const carts = JSON.parse(localStorage.getItem("cart"+userId));
             console.log(carts);
@@ -114,3 +124,20 @@ async function getSpecificProduct(id){
     }
 }
 // GET PRODUCT BY ID
+
+
+// REPETIDO
+function getValuesByPattern(pattern) {
+    const keys = getKeysByPattern(pattern);
+    const values = keys.map(key => {
+      const storedValue = localStorage.getItem(key);
+      return storedValue ? JSON.parse(storedValue) : null;
+    });
+    return values;
+  }
+  
+  function getKeysByPattern(pattern) {
+    const keys = Object.keys(localStorage);
+    const matchingKeys = keys.filter(key => key.startsWith(pattern));
+    return matchingKeys;
+}

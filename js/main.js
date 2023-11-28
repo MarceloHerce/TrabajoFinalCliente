@@ -33,32 +33,6 @@ const createCard = (json)=>{
 
         btnAddCart.addEventListener('click',() => {
             addCart(json);
-            
-            // const cart = document.querySelector("#cartBody")
-            // const tr = document.createElement("tr");
-            // const tdProduct = document.createElement("td");
-            // const tdPrice = document.createElement("td");
-            // const tdQuantity = document.createElement("td");
-            // const tdDelete = document.createElement("td");
-            // const delImg = document.createElement("img");
-            // const title = document.createElement("h3");
-            // const img = document.createElement("img");
-            // title.innerHTML = json.title;
-            // img.src = json.image;
-            // tdProduct.appendChild(title);
-            // img.classList.toggle("cartImg");
-            // tdProduct.appendChild(img);
-            // tdProduct.classList.toggle("cartProduct");
-            // delImg.src = "src/Vector.svg";
-            // delImg.classList.toggle("cartDel");
-            // tdDelete.appendChild(delImg);
-            // tdPrice.innerHTML = json.price;
-            // tdQuantity.innerHTML = "1";
-            // tr.appendChild(tdProduct);
-            // tr.appendChild(tdPrice);
-            // tr.appendChild(tdQuantity);
-            // tr.appendChild(tdDelete);
-            // cart.appendChild(tr);
         })
         div.appendChild(btnAddCart);
         div.appendChild(btn);
@@ -132,6 +106,8 @@ if(sessionStorage.getItem("login") !== null){
     // getAllProducts();
     logout.style.display = "block";
     forms.style.display = "none";
+    const createProductBtn = document.querySelector("#createProduct");
+    createProductBtn.style.display = "block";
     if(container.innerHTML === ""){
         getAllProducts();
         // getAllProductsLocalStorage();
@@ -357,7 +333,8 @@ function getValuesByPattern(pattern) {
 function verifyProductLocalStorage(product){
     if(JSON.parse(localStorage.getItem("product"+product.id) === null)){
         console.log("no esta en local storage");
-        createCard(product);
+        // createCard(product);
+        return product
     } else{
         console.log("esta en local storage")
         const productoLocalS = JSON.parse(localStorage.getItem("product"+product.id));
@@ -366,7 +343,8 @@ function verifyProductLocalStorage(product){
 
         } else {
 
-            createCard(productoLocalS);
+            // createCard(productoLocalS);
+            return productoLocalS;
         }
     }
 }
@@ -378,7 +356,8 @@ async function getAllProducts(){
         const response = await fetch('https://fakestoreapi.com/products');
         const productsAPI = await response.json();
         productsAPI.forEach(el => {
-            verifyProductLocalStorage(el);
+            // verifyProductLocalStorage(el);
+            createCard(verifyProductLocalStorage(el));
         });
 
         getAllProductsLocalStorage();
@@ -457,17 +436,22 @@ async function getSpecificCategory(category){
         const response = await fetch(url);
         const json = await response.json();
         json.forEach(el => {
-            verifyProductLocalStorage(el);
-        });
-        const localProducts = getValuesByPattern("product")
-        localProducts.forEach(product => {
-            if(product.category === category){
-                createCard(product);
-                console.log("is category")
-            } else{
-                console.log("Is not category: " + product)
+            if(verifyProductLocalStorage(el).category === category){
+                // verifyProductLocalStorage(el);
+                createCard(verifyProductLocalStorage(el));
+
             }
-        })
+        });
+        getSpecificCategoryLocalStorage(category);
+        // const localProducts = getValuesByPattern("product")
+        // localProducts.forEach(product => {
+        //     if(product.category === category){
+        //         createCard(product);
+        //         console.log("is category")
+        //     } else{
+        //         console.log("Is not category: " + product)
+        //     }
+        // })
         // verifyProductLocalStorage(json);
     } catch (error) {
         console.error(error);
@@ -481,7 +465,7 @@ function getAllProductsLocalStorage(){
     const localStorageProducts = getValuesByPattern("product");
     localStorageProducts.forEach(el => {
         if(el.method==="delete" || el.id<21){
-            console.log("El producto es de la api");
+            console.log("El producto es de la api o esta borrado");
         } else{
             createCard(el);
             console.log("El producto es de localStorage");
@@ -497,8 +481,10 @@ function getSpecificCategoryLocalStorage(category){
     const localStorageProducts = getValuesByPattern("product");
     localStorageProducts.forEach(el => {
         if(el.category === category){
-            console.log("El producto es de la categoria");
-            createCard(el);
+            if(el.method!="delete"){
+                console.log("El producto es de la categoria");
+                createCard(el);
+            }
         } else{
             console.log("El producto no es de categoria");
         }
@@ -525,11 +511,13 @@ async function compareProducts(){
 const cart = document.querySelector("#cart");
 const cartModal = document.querySelector("#cartModal");
 const cartExit = document.querySelector("#cartExit");
+const cartProducts = document.querySelector("#cartProducts");
 cart.addEventListener('click', () => {
+    createCartProduct();
     cartModal.showModal();
 })
-cartExit.addEventListener('clcik', () => {
-    cartModal.closeModal();
+cartExit.addEventListener('click', () => {
+    cartModal.close();
 })
 // CART
 
@@ -564,18 +552,19 @@ async function postCart() {
             }
           });
         
-          const jsonResponse = await response.json();
-          
-          const maxId = getCartMaxId(jsonResponse);
-          const modifiedJson = {
-              ...cart,
-              id:maxId
-          };
+        const jsonResponse = await response.json();
         
-          localStorage.setItem("cart"+modifiedJson.id,JSON.stringify(modifiedJson));
-          console.log(modifiedJson);
-          console.log(typeof maxId);
-          console.log(modifiedJson.id);
+        const maxId = getCartMaxId(jsonResponse);
+        const modifiedJson = {
+            ...cart,
+            id:maxId
+        };
+    
+        localStorage.setItem("cart"+modifiedJson.id,JSON.stringify(modifiedJson));
+        console.log(modifiedJson);
+        console.log(typeof maxId);
+        console.log(modifiedJson.id);
+       
 
     } catch(error){
         console.log("Error al añadir carrito: " + error);
@@ -586,6 +575,11 @@ async function postCart() {
 const buyBtn = document.querySelector("#buy");
 buyBtn.addEventListener('click', () => {
     postCart();
+    sessionStorage.setItem("cart",JSON.stringify({
+        userId:user.id,
+        date:dateFormat(),
+        products:[]
+    }))
 })
 
 // Comprar carrito
@@ -599,7 +593,7 @@ function addCart(el){
         console.log("existe")
     } else{
         userCart.products.push({
-            id:el.id,
+            productId:el.id,
             quantity:1
         })
         console.log("no existe")
@@ -607,6 +601,55 @@ function addCart(el){
     sessionStorage.setItem("cart",JSON.stringify(userCart));
 }
 // Añadir carrito
+
+// DOM de PRODUCTOS CARRITO
+async function createCartProduct() {
+    const userCart = JSON.parse(sessionStorage.getItem("cart"));
+    cartProducts.innerHTML = "";
+    const products = userCart.products;
+    for (const pro of products) {
+        console.log(pro)
+        const productData  = await getSpecificProduct(pro.productId);
+        console.log(productData)
+        const proDiv = document.createElement("div");
+        const proTextDiv = document.createElement("div");
+        const proImg = document.createElement("img");
+        const proTittle = document.createElement("h3");
+        const proQuantity = document.createElement("h3");
+
+        proImg.src = productData.image;
+        proTittle.innerText = productData.title;
+        proQuantity.innerText = "Quantity: "  + pro.quantity;
+    
+
+        proDiv.appendChild(proImg);
+        proTextDiv.appendChild(proTittle);
+        proTextDiv.appendChild(proQuantity);
+        proDiv.appendChild(proTextDiv);
+
+        console.log(proDiv)
+        cartProducts.appendChild(proDiv);
+      }
+}
+// DOM de PRODUCTOS CARRITO
+
+// GET PRODUCT BY ID
+async function getSpecificProduct(id){
+    const url = `https://fakestoreapi.com/products/${id}`;
+    try {
+        const localStorageProduct = JSON.parse(localStorage.getItem("product"+id));
+        if(localStorageProduct){
+            return localStorageProduct;
+        } else {
+            const response = await fetch(url);
+            const json = await response.json();
+            return json;
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+// GET PRODUCT BY ID
 
 /* METODOS CARRITO */
 
@@ -683,3 +726,28 @@ createProductSubmit.addEventListener('submit', function(event) {
     postProduct(product);
 });
 // OBTENER DATOS DE CREAR PRODUCTO
+
+// Login dom
+const displayLogin = document.querySelector("#displayLogin");
+const displayRegister = document.querySelector("#displayRegister");
+
+displayLogin.addEventListener('click', () => {
+    registerForm.classList.toggle("displayN")
+    loginForm.classList.toggle("displayN")
+})
+displayRegister.addEventListener('click', () => {
+    loginForm.classList.toggle("displayN")
+    registerForm.classList.toggle("displayN")
+    
+})
+
+function toggleActive(element) {
+    // Remover la clase 'active' de todos los elementos
+    document.querySelectorAll('.nav li').forEach(function (el) {
+        el.classList.remove('active');
+    });
+
+    // Agregar la clase 'active' al elemento clicado
+    element.classList.add('active');
+}
+// Login dom

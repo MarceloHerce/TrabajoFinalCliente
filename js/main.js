@@ -8,25 +8,22 @@ const createCard = (json)=>{
     //     container.innerHTML = "";
     // }
         const div = document.createElement("div");
-        const p = document.createElement("p");
         const p2 = document.createElement("p");
         const p3 = document.createElement("p");
         const btn = document.createElement("button");
         const btnAddCart = document.createElement("button");
         const img = document.createElement("img");
-        p.innerHTML = json.id;
         p2.innerHTML = json.price + " $";
         p3.innerHTML = json.title;
         btn.innerHTML = json.category;
-        btnAddCart.innerHTML = "Add";
+        btnAddCart.innerHTML = "+ Add";
         img.src = json.image;
-        div.appendChild(p);
         div.appendChild(img);
         div.appendChild(p3);
         div.appendChild(p2);
         btn.setAttribute("href",`product\\product.html?id=${json.id}`);
 
-        btn.addEventListener("click", function() {
+        div.addEventListener("click", function() {
             // Redirige a otra página cuando se hace clic en el botón
             window.location.href = `product\\product.html?id=${json.id}`;
         });
@@ -410,6 +407,8 @@ async function postProduct(product) {
           console.log(typeof maxId);
           console.log(modifiedJson.id);
 
+          location.reload();
+
     } catch(error){
         console.log("Error al añadir carrito: " + error);
     }
@@ -438,22 +437,11 @@ async function getSpecificCategory(category){
         const json = await response.json();
         json.forEach(el => {
             if(verifyProductLocalStorage(el).category === category){
-                // verifyProductLocalStorage(el);
                 createCard(verifyProductLocalStorage(el));
 
             }
         });
         getSpecificCategoryLocalStorage(category);
-        // const localProducts = getValuesByPattern("product")
-        // localProducts.forEach(product => {
-        //     if(product.category === category){
-        //         createCard(product);
-        //         console.log("is category")
-        //     } else{
-        //         console.log("Is not category: " + product)
-        //     }
-        // })
-        // verifyProductLocalStorage(json);
     } catch (error) {
         console.error(error);
     }
@@ -493,14 +481,6 @@ function getSpecificCategoryLocalStorage(category){
 
 }
 //GET  SPECIFIC CATEGORY PRODUCTS LOCALSTORAGE
-
-async function compareProducts(){
-    const productsAPI = await getAllProducts();
-    const productsLS = getAllProductsLocalStorage();
-}
-// COMPARE PRODUCTS
-
-// COMPARE PRODUCTS
 
 /* METODOS PRODUCT Y CATEGORIES */
 
@@ -576,11 +556,15 @@ async function postCart() {
 const buyBtn = document.querySelector("#buy");
 buyBtn.addEventListener('click', () => {
     postCart();
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log( "usuario"+ user);
+    console.log(user.id);
     sessionStorage.setItem("cart",JSON.stringify({
         userId:user.id,
         date:dateFormat(),
         products:[]
     }))
+    cartModal.close();
 })
 
 // Comprar carrito
@@ -588,7 +572,7 @@ buyBtn.addEventListener('click', () => {
 // Añadir carrito
 function addCart(el){
     const userCart = JSON.parse(sessionStorage.getItem("cart"));
-    const productCart = userCart.products.find(pro => pro.id === el.id)
+    const productCart = userCart.products.find(pro => pro.productId === el.id)
     if(productCart){
         productCart.quantity += 1;
         console.log("existe")
@@ -743,12 +727,10 @@ displayRegister.addEventListener('click', () => {
 })
 
 function toggleActive(element) {
-    // Remover la clase 'active' de todos los elementos
     document.querySelectorAll('.nav li').forEach(function (el) {
         el.classList.remove('active');
     });
 
-    // Agregar la clase 'active' al elemento clicado
     element.classList.add('active');
 }
 // Login dom

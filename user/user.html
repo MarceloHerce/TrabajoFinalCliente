@@ -7,20 +7,64 @@
     <link rel="stylesheet" href="../css/product.css">
     <link rel="stylesheet" href="../css/user.css">
     <script type="text/javascript" src="../js/user.js" defer></script>
-    
-    <title>Document</title>
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+
+    <title>User</title>
 </head>
 <body>
+    <!-- CABECERA -->
     <header id="header">
-        <a href="../index.html"><h1>Name</h1></a>
+        <a href="../index.html"><div class="">
+            <img src="../src/logo.png" class="logo">
+            <h1>Vedruna's outlet</h1>
+        </div></a>
         <div id="userF">
-            <button id="user"><h3 id="userName"></h3></button>
-            <button id="cart"><h3>Cart</h3></button>
-            <button id="logout"><h3>Logout</h3></button>
+            <ul class="nav">
+                <li id="user" onclick="toggleActive(this)" class="active"><h3 id="userName"></h3></li>
+                <li id="cart" onclick="toggleActive(this)"><h3>Cart</h3></li>
+                <li id="logout" onclick="toggleActive(this)"><h3>Logout</h3></li>
+            </ul>
         </div>
     </header>
-    <div class="container"></div>
-    <div class="cartContainer"></div>
-    <footer>Pie</footer>
+    <!-- CABECERA -->
+    <!-- CARRITO -->
+    <dialog id="cartModal">
+        <div id="cartContainer">
+            <div id="cartExit">
+                <img src="../src/Vector.svg" alt="Exit cart">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="cartBody">
+
+                </tbody>
+            </table>
+            <div id="cartProducts"></div>
+            <button id="buy"><h3>Buy</h3></button>
+        </div>
+    </dialog>
+    <!-- CARRITO -->
+    <div class="container">
+
+        <div class="cartContainer"></div>
+    </div>
+    <footer id="footer">
+        <div class="">
+            <img src="../src/logo.png" class="logo">
+        </div>
+        <div id="socialMedia">
+            <p>info@gmail.com</p>
+            <p>Compra Fácil, Devolución Imposible Vedruna's outlet</p>
+            
+        </div>
+    </footer>
 </body>
 </html>

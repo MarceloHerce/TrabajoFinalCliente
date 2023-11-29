@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/user.css">
+    <script type="text/javascript" src="../js/user.js" defer></script>
+    <!-- litelement -->
+    <script type="module" src="../js/litelements.js"></script>
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+
+    <title>User</title>
+</head>
+<body>
+    <!-- CABECERA -->
+    <header id="header">
+        <a href="../index.html"><div class="">
+            <img src="../src/logo.png" class="logo">
+            <h1>Vedruna's outlet</h1>
+        </div></a>
+        <div id="userF">
+            <ul class="nav">
+                <li id="user" onclick="toggleActive(this)" class="active"><h3 id="userName"></h3></li>
+                <li id="cart" onclick="toggleActive(this)"><h3>Cart</h3></li>
+                <li id="logout" onclick="toggleActive(this)"><h3>Logout</h3></li>
+            </ul>
+        </div>
+    </header>
+    <!-- CABECERA -->
+    <!-- CARRITO -->
+    <dialog id="cartModal">
+        <div id="cartContainer">
+            <div id="cartExit">
+                <img src="../src/Vector.svg" alt="Exit cart">
+            </div>
+            <div id="cartProducts"></div>
+            <button id="buy"><h3>Buy</h3></button>
+        </div>
+    </dialog>
+    <!-- CARRITO -->
+    <div class="container">
+
+        <div class="cartContainer"></div>
+    </div>
+    <footer id="footer">
+        <div class="">
+            <img src="../src/logo.png" class="logo">
+        </div>
+        <div id="socialMedia">
+            <p>info@gmail.com</p>
+            <p>Compra Fácil, Devolución Imposible Vedruna's outlet</p>
+            
+        </div>
+    </footer>
+</body>
+</html>

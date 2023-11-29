@@ -1,0 +1,32 @@
+dialog::backdrop{
+    background-color: rgba(0,0,0,.55);
+}
+dialog{
+    max-width: 65ch;
+}
+#updateForm div{
+    display: flex;
+    flex-direction: column;
+}
+dialog form{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+#delete{
+    width: 100%;
+}
+#closeModal{
+    margin-left: 70%;
+}
+.pCard{
+    max-width: 100%;
+    width: 50%;
+}
+.pCard img{
+    display: block;
+    width: 50%;
+    margin: auto;
+}

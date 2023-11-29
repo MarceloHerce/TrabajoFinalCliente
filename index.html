@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/main.js" defer></script>
+    <!-- litelement -->
+    <script type="module" src="js/litelements.js" defer></script>
+    <!-- Fuente -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+
+    
+    <title>Vedruna's outlet</title>
+</head>
+<body>
+    <!-- CABECERA -->
+    <header id="header">
+        <a href="index.html"><div class="">
+            <img src="src/logo.png" class="logo">
+            <h1>Vedruna's outlet</h1>
+        </div></a>
+        <div id="userF">
+            <ul class="nav">
+                <li id="user" onclick="toggleActive(this)"><h3 id="userName"></h3></li>
+                <li id="cart" onclick="toggleActive(this)"><h3>Cart</h3></li>
+                <li id="logout" onclick="toggleActive(this)"><h3>Logout</h3></li>
+            </ul>
+        </div>
+    </header>
+    <!-- CABECERA -->
+    
+    <!-- CARRITO -->
+    <dialog id="cartModal">
+        <div id="cartContainer">
+            <div id="cartExit">
+                <img src="src/Vector.svg" alt="Exit cart">
+            </div>
+            <div id="cartProducts"></div>
+            <button id="buy"><h3>Buy</h3></button>
+        </div>
+    </dialog>
+    <!-- CARRITO -->
+
+    <!-- LOGIN Y REGISTER FORMS -->
+    <div id="forms">
+        <div class="loginRegister">
+            <ul class="nav">
+                <li id="displayLogin" class="active" onclick="toggleActive(this)">Sign in</li>
+                <li id="displayRegister" onclick="toggleActive(this)">Sign Up</li>
+            </ul>
+            <form action="#" id="login">
+                <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+                </div>
+                <input type="submit" value="Enviar">
+            </form>
+            <form action="" id="register" class="displayN">
+                <div>
+                <label for="username">Username</label>
+                <input type="text" id="Rusername" name="username" required>
+                </div>
+                <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
+                </div>
+                <div>
+                <label for="password">Password</label>
+                <input type="password" id="Rpassword" name="password" required>
+                </div>
+                <div>
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" required>
+                </div>
+                <div>
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <div>
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+                </div>
+                <div>
+                <label for="street">Street</label>
+                <input type="text" id="street" name="street" required>
+                </div>
+                <div>
+                <label for="number">Number</label>
+                <input type="text" id="number" name="number" required>
+                </div>
+                <div>
+                <label for="zipcode">Zipcode</label>
+                <input type="text" id="zipcode" name="zipcode" required>
+                </div>
+                <div>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" required>
+                </div>
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+    
+    <!-- Categorias  -->
+    <div id="categories">
+    </div>
+
+    <!-- Container de productos -->
+    <div class="container"></div>
+
+    <!-- Crear productos -->
+    <button id="createProduct">Create Product</button>
+    <div id="createProductForm" class="displayN">
+        <form id="createProductSubmit">
+            <div>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="text" id="price" name="price">
+            </div>
+            <div>
+                <label for="category">Category</label>
+                <select name="category" id="category">
+                <option value="electronics">Electronics</option>
+                <option value="jewelery">Jewelery</option>
+                <option value="men's clothing">Men's clothing</option>
+                <option value="women's clothing">Women's clothing</option>
+                </select>
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description">
+            </div>
+            <div>
+                <label for="image">Image</label>
+                <input type="text" id="image" name="image">
+            </div>
+            <input type="submit" value="Enviar" >
+        </form>
+    </div>
+    <my-footer></my-footer>
+</body>
+</html>

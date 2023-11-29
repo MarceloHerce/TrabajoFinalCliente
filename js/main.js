@@ -242,6 +242,7 @@ async function verifyUser(username, password){
 
     } catch (error) {
         console.error("Error al verificar y almacenar usuario:", error);
+        window.location.href = 'error/error.html';
         return false;
     }
 }

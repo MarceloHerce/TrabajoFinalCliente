@@ -14,19 +14,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 
     
-    <title>Document</title>
+    <title>Vedruna's outlet</title>
 </head>
 <body>
     <!-- CABECERA -->
     <header id="header">
-        <div class="">
+        <a href="index.html"><div class="">
             <img src="src/logo.png" class="logo">
             <h1>Vedruna's outlet</h1>
-        </div>
+        </div></a>
         <div id="userF">
-            <!-- <button id="user"><h3 id="userName"></h3></button> -->
-            <!-- <button id="cart"><h3>Cart</h3></button> -->
-            <!-- <button id="logout"><h3>Logout</h3></button> -->
             <ul class="nav">
                 <li id="user" onclick="toggleActive(this)"><h3 id="userName"></h3></li>
                 <li id="cart" onclick="toggleActive(this)"><h3>Cart</h3></li>
@@ -124,11 +121,15 @@
             </form>
         </div>
     </div>
-    <!-- LOGIN Y REGISTER FORMS -->
     
+    <!-- Categorias  -->
     <div id="categories">
     </div>
+
+    <!-- Container de productos -->
     <div class="container"></div>
+
+    <!-- Crear productos -->
     <button id="createProduct">Create Product</button>
     <div id="createProductForm" class="displayN">
         <form id="createProductSubmit">
@@ -161,10 +162,12 @@
         </form>
     </div>
     <footer id="footer">
-        <h3>Name</h3>
+        <div class="">
+            <img src="src/logo.png" class="logo">
+        </div>
         <div id="socialMedia">
             <p>info@gmail.com</p>
-            <p>Compra Fácil, Devolución Imposible Emporium</p>
+            <p>Compra Fácil, Devolución Imposible Vedruna's outlet</p>
             
         </div>
     </footer>

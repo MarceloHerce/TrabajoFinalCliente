@@ -4,9 +4,6 @@
 // Crear cartas de productos
 const createCard = (json)=>{
     const container = document.querySelector(".container");
-    // if(reset==="y"){
-    //     container.innerHTML = "";
-    // }
         const div = document.createElement("div");
         const p2 = document.createElement("p");
         const p3 = document.createElement("p");
@@ -24,11 +21,12 @@ const createCard = (json)=>{
         btn.setAttribute("href",`product\\product.html?id=${json.id}`);
 
         div.addEventListener("click", function() {
-            // Redirige a otra página cuando se hace clic en el botón
+            // Redirige a otra página 
             window.location.href = `product\\product.html?id=${json.id}`;
         });
 
         btnAddCart.addEventListener('click',() => {
+            event.stopPropagation();
             addCart(json);
         })
         div.appendChild(btnAddCart);
@@ -122,13 +120,7 @@ logout.addEventListener('click', () => {
 loginForm.addEventListener('submit', () =>{
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    verifyUser(username, password)
-        .then(() => {
-            // location.reload();
-        })
-        .catch((error) => {
-            console.log("Error:", error);
-        });
+    verifyUser(username, password);
 })
 
 // Obtener datos del registerForm
@@ -191,7 +183,8 @@ async function putUser(user){
         )
     })
         .then(res=>res.json())
-        .then(json=>json);
+        .then(json=>json)
+        .catch(error => console.log("Error al añadir usuario: " + error));
 }
 //   Put user
 
@@ -233,6 +226,7 @@ async function verifyUser(username, password){
             login(isLocalUser);
             location.reload();
         } else {
+            alert("incorrect password or user");
             console.log("Contraseña o nombre incorrectos");
             return false;
         }
@@ -269,12 +263,15 @@ async function usernameExists(username){
         const isLocalUser = getValuesByPattern("user").find(u => u.username === username);
 
         if (isAPIUser) {
+            alert("The username is on use");
             console.log("The username is on use");
             return false;
         } else if (isLocalUser){
+            alert("The username is on use");
             console.log("The username is on use");
             return false;
         } else {
+            alert("Register success");
             console.log("Register success");
             return true;
         }
@@ -292,7 +289,7 @@ function getUserMaxId() {
     const keys = getKeysByPattern("user");
   
     keys.forEach(key => {
-        const currentId = parseInt(key.substring("user".length), 10);
+        const currentId = parseInt(key.substring("user".length));
         if (!isNaN(currentId) && currentId >= maxId) {
           maxId = currentId + 1;
         }
@@ -323,7 +320,7 @@ function getValuesByPattern(pattern) {
   }
   
 
-
+verifyProductLocalStorage
 
 /* METODOS PRODUCT Y CATEGORIES */
 
@@ -331,17 +328,20 @@ function getValuesByPattern(pattern) {
 function verifyProductLocalStorage(product){
     if(JSON.parse(localStorage.getItem("product"+product.id) === null)){
         console.log("no esta en local storage");
+        console.log(product)
         // createCard(product);
         return product
     } else{
         console.log("esta en local storage")
         const productoLocalS = JSON.parse(localStorage.getItem("product"+product.id));
         if(productoLocalS.method === "delete"){
-            console.log("Product deleted")
-
+            console.log("Product deleted");
+            console.log(productoLocalS)
         } else {
 
             // createCard(productoLocalS);
+            
+            console.log(productoLocalS)
             return productoLocalS;
         }
     }
@@ -355,7 +355,9 @@ async function getAllProducts(){
         const productsAPI = await response.json();
         productsAPI.forEach(el => {
             // verifyProductLocalStorage(el);
-            createCard(verifyProductLocalStorage(el));
+            if(verifyProductLocalStorage(el)){
+                createCard(verifyProductLocalStorage(el));
+            }
         });
 
         getAllProductsLocalStorage();
@@ -374,7 +376,7 @@ function getProductMaxId(json) {
     const keys = getKeysByPattern("product");
   
     keys.forEach(key => {
-        const currentId = parseInt(key.substring("product".length), 10);/* el 10 se puede quitar */
+        const currentId = parseInt(key.substring("product".length));
         if (!isNaN(currentId) && currentId >= maxId) {
           maxId = currentId + 1;
         }
@@ -436,10 +438,13 @@ async function getSpecificCategory(category){
         const response = await fetch(url);
         const json = await response.json();
         json.forEach(el => {
-            if(verifyProductLocalStorage(el).category === category){
-                createCard(verifyProductLocalStorage(el));
-
+            const product = verifyProductLocalStorage(el);
+            if(product){
+                if(product.category === category && !product.method){
+                    createCard(product);
+                }
             }
+            console.log("hola")
         });
         getSpecificCategoryLocalStorage(category);
     } catch (error) {
@@ -469,10 +474,15 @@ function getAllProductsLocalStorage(){
 function getSpecificCategoryLocalStorage(category){
     const localStorageProducts = getValuesByPattern("product");
     localStorageProducts.forEach(el => {
-        if(el.category === category){
-            if(el.method!="delete"){
+        // Si el producto pertenece a la categoria
+        if(el && el.category === category && el.method != "delete"){
+            // Y no tiene method
+            if(!el.method){
                 console.log("El producto es de la categoria");
                 createCard(el);
+            } else{
+                createCard(el);
+
             }
         } else{
             console.log("El producto no es de categoria");
@@ -509,7 +519,7 @@ function getCartMaxId(json) {
     const keys = getKeysByPattern("cart");
   
     keys.forEach(key => {
-        const currentId = parseInt(key.substring(4), 10);
+        const currentId = parseInt(key.substring("cart".length));
         if (!isNaN(currentId) && currentId >= maxId) {
           maxId = currentId + 1;
         }
@@ -592,6 +602,11 @@ async function createCartProduct() {
     const userCart = JSON.parse(sessionStorage.getItem("cart"));
     cartProducts.innerHTML = "";
     const products = userCart.products;
+
+    const totalPrice = document.createElement("h3");
+    let totalPriceValue = 0;
+
+    console.log("totalPrice: " + totalPrice)
     for (const pro of products) {
         console.log(pro)
         const productData  = await getSpecificProduct(pro.productId);
@@ -601,20 +616,25 @@ async function createCartProduct() {
         const proImg = document.createElement("img");
         const proTittle = document.createElement("h3");
         const proQuantity = document.createElement("h3");
+        const price = document.createElement("h3");
 
         proImg.src = productData.image;
         proTittle.innerText = productData.title;
         proQuantity.innerText = "Quantity: "  + pro.quantity;
-    
+        price.innerText = productData.price*pro.quantity + " $";
+        totalPriceValue += productData.price*pro.quantity;
 
         proDiv.appendChild(proImg);
         proTextDiv.appendChild(proTittle);
         proTextDiv.appendChild(proQuantity);
+        proTextDiv.appendChild(price);
         proDiv.appendChild(proTextDiv);
 
         console.log(proDiv)
         cartProducts.appendChild(proDiv);
-      }
+    }
+    totalPrice.innerText = totalPriceValue + " $";
+    cartProducts.appendChild(totalPrice);
 }
 // DOM de PRODUCTOS CARRITO
 

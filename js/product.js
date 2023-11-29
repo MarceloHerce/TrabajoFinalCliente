@@ -134,8 +134,9 @@ async function deleteProduct(id){
     
             // Verificar si el producto a sido modificado
             if(localStorage.getItem("product"+json.id)){
-                const productMod = localStorage.getItem("product"+json.id);
+                const productMod = JSON.parse(localStorage.getItem("product"+json.id));
                 console.log("El producto fue modificado");
+                productMod["method"]="delete";
                 setDelete(productMod);
             } else if(json === null){
                 console.log("El objeto no es de la api");
@@ -155,7 +156,7 @@ async function deleteProduct(id){
 }
 // DELETE PRODUCT
 
-// SEARCH PRODUCTS IN LOCAL STORAGE
+// SET UPDATE IN LOCAL STORAGE
 function setUpdate(product){
     const products = getKeysByPattern("product");
     console.log(product);
@@ -167,11 +168,10 @@ function setUpdate(product){
         console.error("Error al modificar producto: " + error);
     }
 }
-// SEARCH PRODUCTS IN LOCAL STORAGE
+// SET UPDATE IN LOCAL STORAGE
 
 function setDelete(product) {
     if(product){
-        console.log(product);
         localStorage.setItem("product"+product.id, JSON.stringify(product));
     } else {
         console.log("Esta en local storage");
@@ -199,6 +199,28 @@ async function createEditForm(productPromise){
                     input.disabled = true;
                 }
                 if(key === "method"){
+                    continue;
+                }
+                if(key === "category"){
+                    const select = document.createElement("select");
+                    select.setAttribute("name", "category");
+                    select.setAttribute("id", "category");
+                    const categories = ["Electronics", "Jewelery", "Men's clothing", "Women's clothing"];
+                    categories.forEach(category => {
+                        const option = document.createElement("option");
+                        option.setAttribute("value", category.toLowerCase());
+                        option.innerText = category;
+                        select.appendChild(option);
+
+                        // seleccionar categoria que tiene el producto
+                        if (category.toLowerCase() === product[key]) {
+                            option.selected = true;
+                        }
+                    });
+                    console.log(select);
+                    div.appendChild(label);
+                    div.appendChild(select);
+                    updateForm.appendChild(div)
                     continue;
                 }
                 input.setAttribute(type,key );
@@ -313,7 +335,7 @@ function getCartMaxId(json) {
     const keys = getKeysByPattern("cart");
   
     keys.forEach(key => {
-        const currentId = parseInt(key.substring(4), 10);
+        const currentId = parseInt(key.substring("cart".length));
         if (!isNaN(currentId) && currentId >= maxId) {
           maxId = currentId + 1;
         }

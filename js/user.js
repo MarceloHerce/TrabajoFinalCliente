@@ -178,7 +178,7 @@ function getCartMaxId(json) {
     const keys = getKeysByPattern("cart");
   
     keys.forEach(key => {
-        const currentId = parseInt(key.substring(4), 10);
+        const currentId = parseInt(key.substring("cart".length));
         if (!isNaN(currentId) && currentId >= maxId) {
           maxId = currentId + 1;
         }
